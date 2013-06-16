@@ -59,6 +59,10 @@
                     android:scheme="oauth" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.codepath.apps.restclienttemplate.PostTweet"
+            android:label="@string/title_activity_post_tweet" >
+        </activity>
     </application>
 
 </manifest>
