@@ -11,7 +11,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ public class TweetHomeActivity extends Activity {
 	ListView lvTweetsTimeline;
 	TweetsAdapter myArrayAdapter;
 	List<Tweet> tweets;
+	int tweetsPageNumber;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,23 @@ public class TweetHomeActivity extends Activity {
 		myArrayAdapter = new TweetsAdapter(this, tweets);
 		lvTweetsTimeline = (ListView) findViewById(R.id.lvTweetsTimeline);
 		lvTweetsTimeline.setAdapter(myArrayAdapter);
+		myArrayAdapter.clear();
+		tweetsPageNumber = 1;
 		
+		lvTweetsTimeline.setOnScrollListener(new OnScrollListener() {
+			
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		fetchTweets();
 	}
@@ -42,11 +60,10 @@ public class TweetHomeActivity extends Activity {
 	public void fetchTweets() {
 
 		RestClient client = RestClientApp.getRestClient();
-		client.getHomeTimeline(1, new JsonHttpResponseHandler() {
+		client.getHomeTimeline(tweetsPageNumber, new JsonHttpResponseHandler() {
 
 			@Override
 			public void onSuccess(JSONArray json) {
-				myArrayAdapter.clear();
 				Log.d("DEBUG", "JSONARRAY" + json.toString());
 				//myArrayAdapter.addAll(json.toString());
 				myArrayAdapter.addAll(Tweet.fromJSONArray(json));
@@ -60,14 +77,6 @@ public class TweetHomeActivity extends Activity {
 			}  
 		});
 	}
-	
-	public void composeNewTweet(View view) {
-		Toast.makeText(this, "ComposeNewTweet", Toast.LENGTH_SHORT).show();
-	}
-	
-	public void refreshTweetHome(View view) {
-		Toast.makeText(this, "RefreshTweetHome", Toast.LENGTH_SHORT).show();
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -80,6 +89,8 @@ public class TweetHomeActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.refresh) {
 			Toast.makeText(this, "Item: " + item.toString(), Toast.LENGTH_SHORT).show();
+			myArrayAdapter.clear();
+			tweetsPageNumber = 1;
 			fetchTweets();
 		}
 		if (item.getItemId() == R.id.compose_tweet ) {
@@ -89,6 +100,15 @@ public class TweetHomeActivity extends Activity {
 			startActivityForResult(myPostIntent, 1);
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// Refresh tweets when user comes back
+		myArrayAdapter.clear();
+		tweetsPageNumber = 1;
+		fetchTweets();
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 }

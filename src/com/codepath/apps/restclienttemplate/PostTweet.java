@@ -16,11 +16,16 @@ public class PostTweet extends Activity {
 	Button btnCancel;
 	Button btnPost;
 	EditText etComposeTweet;
+	RestClient client;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_post_tweet);
+		client = RestClientApp.getRestClient();
+		
+		
+		this.setTitle("Saumitra");
 		
 		etComposeTweet = (EditText) findViewById(R.id.etComposeTweet);
 		
@@ -38,7 +43,6 @@ public class PostTweet extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				RestClient client = RestClientApp.getRestClient();
 				client.postTweet(etComposeTweet.toString(), new AsyncHttpResponseHandler() {
 
 					@Override
@@ -63,6 +67,7 @@ public class PostTweet extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
+		
 		getMenuInflater().inflate(R.menu.post_tweet, menu);
 		return true;
 	}
