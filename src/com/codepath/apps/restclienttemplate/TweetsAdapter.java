@@ -11,103 +11,44 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * @author saumitra
  *
  */
-public class TweetsAdapter extends ArrayAdapter {
+public class TweetsAdapter extends ArrayAdapter<Tweet> {
 
-	/**
-	 * @param context
-	 * @param textViewResourceId
-	 */
-	public TweetsAdapter(Context context, int textViewResourceId) {
-		super(context, textViewResourceId);
+	public TweetsAdapter(Context context, List<Tweet> tweets) {
+		super(context, R.layout.tweet_item, tweets);
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @param context
-	 * @param resource
-	 * @param textViewResourceId
-	 */
-	public TweetsAdapter(Context context, int resource, int textViewResourceId) {
-		super(context, resource, textViewResourceId);
-		// TODO Auto-generated constructor stub
-	}
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+	    View view = convertView;
+	    if (view == null) {
+	    	LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	    	view = inflater.inflate(R.layout.tweet_item, null);
+	    }
 
-	/**
-	 * @param context
-	 * @param textViewResourceId
-	 * @param objects
-	 */
-	public TweetsAdapter(Context context, int textViewResourceId,
-			Object[] objects) {
-		super(context, textViewResourceId, objects);
-		// TODO Auto-generated constructor stub
-	}
+        Tweet tweet = getItem(position);        
+//      ImageView imageView = (ImageView) view.findViewById(R.id.ivProfile);
+//      ImageLoader.getInstance().displayImage(tweet.getUser().getProfileImageUrl(), imageView);
 
-	/**
-	 * @param context
-	 * @param textViewResourceId
-	 * @param objects
-	 */
-	public TweetsAdapter(Context context, int textViewResourceId, List objects) {
-		super(context, textViewResourceId, objects);
-		// TODO Auto-generated constructor stub
+        TextView nameView = (TextView) view.findViewById(R.id.tvName);
+//      String formattedName = "<b>" + tweet.getUser().getName() + "</b>" + " <small><font color='#777777'>@" +
+//      tweet.getUser().getScreenName() + "</font></small>";
+        String formattedName = "<b>" + tweet.getName() + "</b>" + " <small><font color='#777777'>@" +
+    	tweet.getScreenName() + "</font></small>";
+        
+        nameView.setText(Html.fromHtml(formattedName));
+        
+        TextView bodyView = (TextView) view.findViewById(R.id.tvBody);
+        bodyView.setText(Html.fromHtml(tweet.getBody()));
+        
+        return view;
 	}
-
-	/**
-	 * @param context
-	 * @param resource
-	 * @param textViewResourceId
-	 * @param objects
-	 */
-	public TweetsAdapter(Context context, int resource, int textViewResourceId,
-			Object[] objects) {
-		super(context, resource, textViewResourceId, objects);
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @param context
-	 * @param resource
-	 * @param textViewResourceId
-	 * @param objects
-	 */
-	public TweetsAdapter(Context context, int resource, int textViewResourceId,
-			List objects) {
-		super(context, resource, textViewResourceId, objects);
-		// TODO Auto-generated constructor stub
-	}
-
-//	@Override
-//	public View getView(int position, View convertView, ViewGroup parent) {
-//	    View view = convertView;
-//	    if (view == null) {
-//	    	LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//	    	view = inflater.inflate(R.layout.tweet_item, null);
-//	    }
-//
-//        Tweet tweet = getItem(position);
-//        
-//        ImageView imageView = (ImageView) view.findViewById(R.id.ivProfile);
-//        ImageLoader.getInstance().displayImage(tweet.getUser().getProfileImageUrl(), imageView);
-//        
-//        TextView nameView = (TextView) view.findViewById(R.id.tvName);
-//        String formattedName = "<b>" + tweet.getUser().getName() + "</b>" + " <small><font color='#777777'>@" +
-//                tweet.getUser().getScreenName() + "</font></small>";
-//        nameView.setText(Html.fromHtml(formattedName));
-//
-//        TextView bodyView = (TextView) view.findViewById(R.id.tvBody);
-//        bodyView.setText(Html.fromHtml(tweet.getBody()));
-//        
-//        return view;
-//	}
 }

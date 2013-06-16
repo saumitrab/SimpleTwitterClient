@@ -1,5 +1,8 @@
 package com.codepath.apps.restclienttemplate.models;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,8 +18,8 @@ import com.activeandroid.annotation.Table;
  */
 @Table(name = "tweets")
 public class Tweet extends Model {
-	@Column(name = "userId")
-	String userId;
+//	@Column(name = "userId")
+//	String userId;
 	@Column(name = "userHandle")
 	String userHandle;
 	@Column(name = "timestamp")
@@ -24,9 +27,35 @@ public class Tweet extends Model {
 	@Column(name = "body")
 	String body;
 	
+	String name;
+	String screen_name;
+	String profile_image_url;
+	
+	JSONObject user;
+	
 	// Make sure to define this constructor with no arguments
 	public Tweet() {
 		super();
+	}
+	
+	public String getBody() {
+		return body;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public String getScreenName() {
+		return screen_name;
+	}
+	
+	public JSONObject getUser() {
+		return user;
+	}
+	
+	public String getProfileImageUrl() {
+		return profile_image_url;
 	}
 	
 	// And a constructor that creates an object from the JSON response
@@ -34,11 +63,40 @@ public class Tweet extends Model {
 		super();
 	
 		try {
-			this.userId = object.getString("userId");
-			// ...
+			this.user = object.getJSONObject("user"); // JSON
+			this.body   = object.getString("text");
+			this.name   = this.user.getString("name");
+			this.screen_name = this.user.getString("screen_name");
+			this.profile_image_url = this.user.getString("profile_image_url");
+			
 	    } catch (JSONException e) {
 	      e.printStackTrace();
 	    }
+	}
+	
+//	public Tweet(JSONArray json) {
+//		super();
+//		try {
+//			this.userId = json.getString("user").getString("name");
+//			this.body   = json.getString("text");
+//	    } catch (JSONException e) {
+//	      e.printStackTrace();
+//	    }
+//	}
+	
+	public static ArrayList<Tweet> fromJSONArray(
+			JSONArray jsonArrayTweets) {
+		ArrayList<Tweet> results = new ArrayList<Tweet>();
+		
+		for (int i=0; i< jsonArrayTweets.length(); i++) {
+			try{
+				results.add(new Tweet(jsonArrayTweets.getJSONObject(i)));
+			} catch (JSONException e ) {
+				e.printStackTrace();
+			}
+		}
+		
+		return results;
 	}
 	
 //	// Define table fields

@@ -1,20 +1,24 @@
 package com.codepath.apps.restclienttemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONArray;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class TweetHomeActivity extends Activity {
 
 	ListView lvTweetsTimeline;
-	ArrayAdapter<String> myArrayAdapter;
+	TweetsAdapter myArrayAdapter;
+	List<Tweet> tweets;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,37 +26,29 @@ public class TweetHomeActivity extends Activity {
 		setContentView(R.layout.activity_tweet_home);
 		Log.d("DEBUG", "TweetHomeActivity onCreate");
 
-		myArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+		tweets = new ArrayList<Tweet>();
+		myArrayAdapter = new TweetsAdapter(this, tweets);
 		lvTweetsTimeline = (ListView) findViewById(R.id.lvTweetsTimeline);
 		lvTweetsTimeline.setAdapter(myArrayAdapter);
 		
 		RestClient client = RestClientApp.getRestClient();
 		client.getHomeTimeline(1, new JsonHttpResponseHandler() {
-			/* (non-Javadoc)
-			 * @see com.loopj.android.http.JsonHttpResponseHandler#onSuccess(org.json.JSONArray)
-			 */
+
 			@Override
 			public void onSuccess(JSONArray json) {
-				Log.d("DEBUG", json.toString());
-				myArrayAdapter.addAll(json.toString());
+				Log.d("DEBUG", "JSONARRAY" + json.toString());
+				//myArrayAdapter.addAll(json.toString());
+				myArrayAdapter.addAll(Tweet.fromJSONArray(json));
 				super.onSuccess(json);
 			}
 	
-			/* (non-Javadoc)
-			 * @see com.loopj.android.http.JsonHttpResponseHandler#onFailure(java.lang.Throwable, org.json.JSONArray)
-			 */
 			@Override
 			public void onFailure(Throwable arg0, JSONArray arg1) {
 				Log.d("DEBUG", "onFailure :( ");
 				super.onFailure(arg0, arg1);
 			}  
-			
-			
 		});
 	}
-	
-
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,7 +56,4 @@ public class TweetHomeActivity extends Activity {
 		getMenuInflater().inflate(R.menu.tweet_home, menu);
 		return true;
 	}
-	
-	
-
 }
