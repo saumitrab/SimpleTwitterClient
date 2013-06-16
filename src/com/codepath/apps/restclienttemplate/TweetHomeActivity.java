@@ -9,7 +9,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -49,6 +52,14 @@ public class TweetHomeActivity extends Activity {
 			}  
 		});
 	}
+	
+	public void composeNewTweet(View view) {
+		Toast.makeText(this, "ComposeNewTweet", Toast.LENGTH_SHORT).show();
+	}
+	
+	public void refreshTweetHome(View view) {
+		Toast.makeText(this, "RefreshTweetHome", Toast.LENGTH_SHORT).show();
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,4 +67,11 @@ public class TweetHomeActivity extends Activity {
 		getMenuInflater().inflate(R.menu.tweet_home, menu);
 		return true;
 	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Toast.makeText(this, "Item: " + item.toString(), Toast.LENGTH_SHORT).show();
+		return super.onOptionsItemSelected(item);
+	}
+
 }
