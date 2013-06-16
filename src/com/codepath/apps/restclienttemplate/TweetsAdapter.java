@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * @author saumitra
@@ -35,8 +37,9 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
 	    }
 
         Tweet tweet = getItem(position);        
-//      ImageView imageView = (ImageView) view.findViewById(R.id.ivProfile);
-//      ImageLoader.getInstance().displayImage(tweet.getUser().getProfileImageUrl(), imageView);
+        ImageView imageView = (ImageView) view.findViewById(R.id.ivProfileImage);
+        //ImageLoader.getInstance().displayImage(tweet.getUser().getProfileImageUrl(), imageView);
+        ImageLoader.getInstance().displayImage(tweet.getProfileImageUrl(), imageView);
 
         TextView nameView = (TextView) view.findViewById(R.id.tvName);
 //      String formattedName = "<b>" + tweet.getUser().getName() + "</b>" + " <small><font color='#777777'>@" +
