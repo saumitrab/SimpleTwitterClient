@@ -34,11 +34,18 @@ public class TweetHomeActivity extends Activity {
 		lvTweetsTimeline = (ListView) findViewById(R.id.lvTweetsTimeline);
 		lvTweetsTimeline.setAdapter(myArrayAdapter);
 		
+		
+		fetchTweets();
+	}
+	
+	public void fetchTweets() {
+
 		RestClient client = RestClientApp.getRestClient();
 		client.getHomeTimeline(1, new JsonHttpResponseHandler() {
 
 			@Override
 			public void onSuccess(JSONArray json) {
+				myArrayAdapter.clear();
 				Log.d("DEBUG", "JSONARRAY" + json.toString());
 				//myArrayAdapter.addAll(json.toString());
 				myArrayAdapter.addAll(Tweet.fromJSONArray(json));
@@ -70,7 +77,13 @@ public class TweetHomeActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		Toast.makeText(this, "Item: " + item.toString(), Toast.LENGTH_SHORT).show();
+		if (item.getItemId() == R.id.refresh) {
+			Toast.makeText(this, "Item: " + item.toString(), Toast.LENGTH_SHORT).show();
+			fetchTweets();
+		}
+		if (item.getItemId() == R.id.compose_tweet ) {
+			Toast.makeText(this, "Item: " + item.toString(), Toast.LENGTH_SHORT).show();
+		}
 		return super.onOptionsItemSelected(item);
 	}
 
