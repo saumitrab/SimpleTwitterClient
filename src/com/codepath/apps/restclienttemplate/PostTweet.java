@@ -24,8 +24,8 @@ public class PostTweet extends Activity {
 		setContentView(R.layout.activity_post_tweet);
 		client = RestClientApp.getRestClient();
 		
-		
-		this.setTitle("Saumitra");
+		//Todo: fetch username and setTitle
+		this.setTitle("Post Tweet");
 		
 		etComposeTweet = (EditText) findViewById(R.id.etComposeTweet);
 		
@@ -43,14 +43,14 @@ public class PostTweet extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				client.postTweet(etComposeTweet.toString(), new AsyncHttpResponseHandler() {
+				client.postTweet(etComposeTweet.getText().toString(), new AsyncHttpResponseHandler() {
 
 					@Override
 					public void onSuccess(String arg0) {
 						Toast.makeText(PostTweet.this, "Posted Tweet!", Toast.LENGTH_SHORT).show();
 						super.onSuccess(arg0);
+						finish();
 					}
-
 
 					@Override
 					public void onFailure(Throwable arg0, String arg1) {
@@ -59,7 +59,6 @@ public class PostTweet extends Activity {
 					}
 
 				}); 
-
 			}
 		});
 	}

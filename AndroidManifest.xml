@@ -14,7 +14,7 @@
     <application
         android:name="com.codepath.apps.restclienttemplate.RestClientApp"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/twitter_bird"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <meta-data
@@ -47,17 +47,17 @@
         <activity
             android:name="com.codepath.apps.restclienttemplate.TweetHomeActivity"
             android:label="@string/title_activity_tweet_home" >
-            <intent-filter>
+        <!--     <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <!-- implicit intent calls -->
+                implicit intent calls
                 <data
                     android:host="simpletweet"
                     android:scheme="oauth" />
-            </intent-filter>
+            </intent-filter> -->
         </activity>
         <activity
             android:name="com.codepath.apps.restclienttemplate.PostTweet"

@@ -5,13 +5,13 @@
         android:orderInCategory="100"
         android:showAsAction="ifRoom|withText"
         android:title="Refresh"
-        android:icon="@drawable/ic_launcher" />
+        android:icon="@drawable/refresh_icon" />
     
     <item
         android:id="@+id/compose_tweet"
         android:orderInCategory="100"
         android:showAsAction="ifRoom|withText"
         android:title="Compose Tweet" 
-        android:icon="@drawable/ic_launcher" />
+        android:icon="@drawable/twitter_quill" />
 
 </menu>

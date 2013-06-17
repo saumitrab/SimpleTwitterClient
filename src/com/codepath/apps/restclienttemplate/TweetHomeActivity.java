@@ -39,18 +39,19 @@ public class TweetHomeActivity extends Activity {
 		myArrayAdapter.clear();
 		tweetsPageNumber = 1;
 		
+		//Todo: fetch username and setTitle
+		this.setTitle("Tweets");
+		
 		lvTweetsTimeline.setOnScrollListener(new OnScrollListener() {
 			
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				// TODO Auto-generated method stub
+				// TODO: detect end of list, call increment tweetsPageNumber and call fetchTweets 
 			}
 			
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
-				// TODO Auto-generated method stub
-				
 			}
 		});
 		
