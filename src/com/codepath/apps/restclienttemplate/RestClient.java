@@ -65,4 +65,9 @@ public class RestClient extends OAuthBaseClient {
     	getClient().post(apiUrl, params, handler);
     }
     
+    public void getMentions(AsyncHttpResponseHandler handler) {
+    	String url = getApiUrl("statuses/mentions_timeline.json");
+    	client.get(url, null, handler);
+    }
+    
 }
