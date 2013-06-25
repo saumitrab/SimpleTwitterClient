@@ -1,65 +1,47 @@
 package com.codepath.apps.restclienttemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.json.JSONArray;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.apps.restclienttemplate.models.Fragments.TwitterTimelineFragment;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-public class TweetHomeActivity extends Activity {
+public class TweetHomeActivity extends FragmentActivity {
 
-	ListView lvTweetsTimeline;
+	int tweetsPageNumber = 1;
 	TweetsAdapter myArrayAdapter;
-	List<Tweet> tweets;
-	int tweetsPageNumber;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tweet_home);
-		Log.d("DEBUG", "TweetHomeActivity onCreate");
-
-		tweets = new ArrayList<Tweet>();
-		myArrayAdapter = new TweetsAdapter(this, tweets);
-		lvTweetsTimeline = (ListView) findViewById(R.id.lvTweetsTimeline);
-		lvTweetsTimeline.setAdapter(myArrayAdapter);
-		myArrayAdapter.clear();
-		tweetsPageNumber = 1;
 		
+
 		//Todo: fetch username and setTitle
 		this.setTitle("Tweets");
-		
-		lvTweetsTimeline.setOnScrollListener(new OnScrollListener() {
-			
-			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				// TODO: detect end of list, call increment tweetsPageNumber and call fetchTweets 
-			}
-			
-			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem,
-					int visibleItemCount, int totalItemCount) {
-			}
-		});
+		Log.d("DEBUG", "TweetHomeActivity onCreate");
 		
 		fetchTweets();
+		
+		// Only if this is a new activity, so fragments don't exist yet.
+		if (savedInstanceState == null) {
+			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			ft.replace(R.id.flContainer, new TwitterTimelineFragment()); 
+			ft.commit();
+		}
+		
 	}
 	
 	public void fetchTweets() {
-
 		RestClient client = RestClientApp.getRestClient();
 		client.getHomeTimeline(tweetsPageNumber, new JsonHttpResponseHandler() {
 
@@ -67,6 +49,9 @@ public class TweetHomeActivity extends Activity {
 			public void onSuccess(JSONArray json) {
 				Log.d("DEBUG", "JSONARRAY" + json.toString());
 				//myArrayAdapter.addAll(json.toString());
+				
+				TwitterTimelineFragment fragment =  (TwitterTimelineFragment) getSupportFragmentManager().findFragmentById(R.id.flContainer);
+				myArrayAdapter = fragment.getTweetsAdapterFromFragment(); 
 				myArrayAdapter.addAll(Tweet.fromJSONArray(json));
 				super.onSuccess(json);
 			}
@@ -78,6 +63,7 @@ public class TweetHomeActivity extends Activity {
 			}  
 		});
 	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
