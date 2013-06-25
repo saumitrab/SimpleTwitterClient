@@ -1,11 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-        <item
+<!--         <item
         android:id="@+id/refresh"
         android:orderInCategory="100"
         android:showAsAction="ifRoom|withText"
         android:title="Refresh"
-        android:icon="@drawable/refresh_icon" />
+        android:icon="@drawable/refresh_icon" /> -->
     
     <item
         android:id="@+id/compose_tweet"
@@ -13,5 +13,14 @@
         android:showAsAction="ifRoom|withText"
         android:title="Compose Tweet" 
         android:icon="@drawable/twitter_quill" />
+    
+        
+    <item
+        android:id="@+id/profile"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:title="Profile"
+        android:icon="@drawable/ic_profile" />
+    
 
 </menu>

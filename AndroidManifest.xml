@@ -47,7 +47,9 @@
         <activity
             android:name="com.codepath.apps.restclienttemplate.TweetHomeActivity"
             android:label="@string/title_activity_tweet_home" >
-        <!--     <intent-filter>
+
+            <!--
+                 <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -57,11 +59,16 @@
                 <data
                     android:host="simpletweet"
                     android:scheme="oauth" />
-            </intent-filter> -->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name="com.codepath.apps.restclienttemplate.PostTweet"
             android:label="@string/title_activity_post_tweet" >
+        </activity>
+        <activity
+            android:name="com.codepath.apps.restclienttemplate.ProfileActivity"
+            android:label="@string/title_activity_profile" >
         </activity>
     </application>
 

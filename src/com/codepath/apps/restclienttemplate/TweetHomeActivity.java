@@ -66,11 +66,9 @@ public class TweetHomeActivity extends FragmentActivity implements TabListener {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.refresh) {
-			Toast.makeText(this, "Item: " + item.toString(), Toast.LENGTH_SHORT).show();
-//			myArrayAdapter.clear();
-//			tweetsPageNumber = 1;
-//			fetchTweets();
+		if (item.getItemId() == R.id.profile) {
+			Intent i = new Intent(this, ProfileActivity.class);
+			startActivity(i);
 		}
 		if (item.getItemId() == R.id.compose_tweet ) {
 			Toast.makeText(this, "Item: " + item.toString(), Toast.LENGTH_SHORT).show();
@@ -101,19 +99,14 @@ public class TweetHomeActivity extends FragmentActivity implements TabListener {
 
 
 	@Override
-	public void onTabSelected(Tab tab, android.app.FragmentTransaction ft) {
-		
+	public void onTabSelected(Tab tab, android.app.FragmentTransaction ft) {		
 		FragmentTransaction ftl = getSupportFragmentManager().beginTransaction();
-		
-		
-		
 		if (tab.getTag() == "HomeTimelineFragment") {
 			ftl.replace(R.id.flContainer, new TweetsHomeTimelineFragment()); 
 		} else {
 			ftl.replace(R.id.flContainer, new MentionsFragment()); 
 		}
 		ftl.commit();
-		
 	}
 
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
     <issue id="NewApi">
+        <ignore path="src/com/codepath/apps/restclienttemplate/ProfileActivity.java" />
         <ignore path="src/com/codepath/apps/restclienttemplate/TweetHomeActivity.java" />
     </issue>
 </lint>
